@@ -5,28 +5,47 @@ from logic_utils import get_range_for_difficulty, parse_guess, check_guess, upda
 # FIX: Refactored logic into logic_utils.py using agent mode
 st.set_page_config(page_title="Glitchy Guesser", page_icon="🎮")
 
-st.title("🎮 Game Glitch Investigator")
-st.caption("An AI-generated guessing game. Something is off.")
-
-st.sidebar.header("Settings")
-
-difficulty = st.sidebar.selectbox(
-    "Difficulty",
-    ["Easy", "Normal", "Hard"],
-    index=1,
+# Rounded outer container + subtle card shadow
+st.markdown(
+    """
+    <style>
+    .main .block-container {
+        border-radius: 1.5rem;
+        border: 1px solid rgba(128, 128, 128, 0.15);
+        padding: 2rem 2.5rem;
+        max-width: 680px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
-attempt_limit_map = {
-    "Easy": 6,
-    "Normal": 8,
-    "Hard": 5,
-}
-attempt_limit = attempt_limit_map[difficulty]
+st.markdown("<h1 style='text-align:center;'>🎮 Game Glitch Investigator</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:gray;'>An AI-generated guessing game. Something is off.</p>", unsafe_allow_html=True)
 
-low, high = get_range_for_difficulty(difficulty)
+# ── Sidebar ──────────────────────────────────────────────────
+st.sidebar.header("Settings")
 
-st.sidebar.caption(f"Range: {low} to {high}")
-st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
+with st.sidebar.container(border=True):
+    st.markdown("##### 🎯 Difficulty")
+    difficulty = st.selectbox(
+        "Difficulty level",
+        ["Easy", "Normal", "Hard"],
+        index=1,
+        label_visibility="collapsed",
+    )
+    attempt_limit_map = {
+        "Easy": 6,
+        "Normal": 8,
+        "Hard": 5,
+    }
+    attempt_limit = attempt_limit_map[difficulty]
+    low, high = get_range_for_difficulty(difficulty)
+    st.caption(f"Range: {low} – {high}")
+    st.caption(f"Max attempts: {attempt_limit}")
 
 # Track difficulty in session state to detect changes and reset the game state if needed
 # FIX: Reset the game state (secret number, attempts, history, status) when difficulty is changed to ensure the secret is within the new difficulty range, implemented in agent mode.
@@ -56,33 +75,34 @@ if "status" not in st.session_state:
 if "history" not in st.session_state:
     st.session_state.history = []
 
-st.subheader("Make a guess")
-
-# FIX: Dynamically displays the current difficulty range (low to high) instead of a hardcoded 1 to 100, implemented in agent mode.
-st.info(
-    f"Guess a number between {low} and {high}. "
-    f"Attempts left: {attempt_limit - st.session_state.attempts}"
-)
-
-with st.expander("Developer Debug Info"):
-    st.write("Secret:", st.session_state.secret)
-    st.write("Attempts:", st.session_state.attempts)
-    st.write("Score:", st.session_state.score)
+with st.sidebar.expander("🔧 Developer Debug"):
+    st.write("Secret:", st.session_state.get("secret", "—"))
+    st.write("Attempts:", st.session_state.get("attempts", 0))
+    st.write("Score:", st.session_state.get("score", 0))
     st.write("Difficulty:", difficulty)
-    st.write("History:", st.session_state.history)
+    st.write("History:", st.session_state.get("history", []))
 
-raw_guess = st.text_input(
-    "Enter your guess:",
-    key=f"guess_input_{difficulty}"
-)
+with st.container(border=True):
+    st.subheader("Make a guess")
 
-col1, col2, col3 = st.columns(3)
-with col1:
-    submit = st.button("Submit Guess 🚀")
-with col2:
-    new_game = st.button("New Game 🔁")
-with col3:
+    # FIX: Dynamically displays the current difficulty range (low to high) instead of a hardcoded 1 to 100, implemented in agent mode.
+    st.info(
+        f"Guess a number between {low} and {high}. "
+        f"Attempts left: {attempt_limit - st.session_state.attempts}"
+    )
+
+    raw_guess = st.text_input(
+        "Enter your guess:",
+        key=f"guess_input_{difficulty}"
+    )
+
     show_hint = st.checkbox("Show hint", value=True)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        submit = st.button("Submit Guess 🚀", use_container_width=True)
+    with col2:
+        new_game = st.button("New Game 🔁", use_container_width=True)
 
 if new_game:
     # FIX: Reset all game states (including status, attempts, and history) on new game and use correct difficulty range for secret number, implemented in agent mode.
@@ -141,4 +161,4 @@ if submit:
                 )
 
 st.divider()
-st.caption("Built by an AI that claims this code is production-ready.")
+st.markdown("<small style='display:block; text-align:center; color:gray;'>Built by an AI that claims this code is production-ready.</small>", unsafe_allow_html=True)
