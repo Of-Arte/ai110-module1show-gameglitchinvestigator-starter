@@ -26,12 +26,12 @@ It wrote the code, ran away, and now the game is unplayable.
 
 ## 📝 Document Your Experience
 
-- [ ] Describe the game's purpose.
+- [x] Describe the game's purpose.
   - The purpose of this game is to guess a secret number between 1 & 100, within a maximum of 8 attempts.
-- [ ] Detail which bugs you found.
+- [x] Detail which bugs you found.
   - The higher/lower hints were incorrect, causing the user to guess in the wrong direction. Changing the difficulty did not reset the game state under the expected conditions. On even attempt numbers, the secret was cast to a string, breaking the integer comparison in check_guess().
 
-- [ ] Explain what fixes you applied.
+- [x] Explain what fixes you applied.
   - I swapped the return values in check_guess() so that the hints would be correct. I also fixed the game state to persist across reruns. Finally, I moved the logic into a separate file to make it more organized.
 
 ## 📸 Demo Walkthrough
@@ -61,4 +61,9 @@ tests/test_game_logic.py ....                                            [100%]
 
 ## 🚀 Stretch Features
 
-- [ ] [If you choose to complete Challenge 4, describe the Enhanced UI changes here — a screenshot is optional]
+- The game body was given a rounded container with card-style borders. The developer debug tool was moved out of the main game view and hidden inside a collapsed expander in the Settings sidebar.
+- The Show Hint toggle was repositioned above the action buttons to make the game layout more uniform and compact.
+- General text elements were updated to use semantic HTML tags (`<h1>`, `<p>`, `<small>`) matching their role on the page.
+- Finally, the main title was centered to match the rest of the header area.
+
+![UI fixes screenshot](ui_fixes.png)
