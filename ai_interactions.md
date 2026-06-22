@@ -9,16 +9,19 @@
 > Document your experience using an AI agent (e.g., Cursor Agent, Claude, Copilot) to make multi-step changes autonomously.
 
 **What task did you give the agent?**
-
-<!-- Describe the goal you asked the agent to accomplish -->
+I manually reviewed app.py and identified the bugs myself before asking the agent to fix them one by one. Example: "The hints 'Higher'/'Lower' within the check_guess function are inconsistent, help me find the issue and refactor the function"
 
 **What did the agent do?**
 
-<!-- List the steps the agent took (files edited, commands run, etc.) -->
+1. Read app.py
+2. Found 2 bugs:
+   a. check_guess() — when guess > secret it says "Go HIGHER!" but should say "Go LOWER!", and vice versa
+   b. TypeError (lines 158-161) - on even attempts secret is turned into a string causing comparison errors, producing incorrect hint results.
+3. Fixed both bugs by swapping the conditional logic in check_guess() and ensuring that guess is always compared as an integer.
 
 **What did you have to verify or fix manually?**
 
-<!-- Describe anything the agent got wrong or that required human review -->
+- To verify the hints were accurate after the agent's fix, I created tests to run through various inputs to ensure the function was returning the correct outputs for each case.
 
 ---
 
@@ -26,51 +29,8 @@
 
 > Document how you used AI to help generate or improve tests.
 
-| Edge Case | Prompt Used | AI-Suggested Test | Did It Pass? | Your Reasoning |
-|-----------|-------------|-------------------|--------------|----------------|
-| | | | | |
-| | | | | |
-| | | | | |
+| Edge Case                 | Prompt Used                                                                                                                                | AI-Suggested Test          | Did It Pass? | Your Reasoning                                                                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------- | ------------ | ------------------------------------------------------------------------------------ |
+| Guess is 50, secret is 50 | "We need to create a test case where the player's guess is equal to the secret number, to make sure the function returns "Win" correctly." | test_guess_equals_secret() | No           | The existing test case was not properly constructed and failed to assert the correct |
 
 ---
-
-## Linting & Style (SF9)
-
-> Document your use of AI for linting or code style improvements.
-
-**Prompt used:**
-
-```
-<!-- Paste the prompt you gave the AI -->
-```
-
-**Linting output before:**
-
-```
-<!-- Paste relevant linter warnings/errors -->
-```
-
-**Changes applied:**
-
-<!-- Describe what you changed based on the AI's suggestions -->
-
----
-
-## Model Comparison (SF11)
-
-> Compare two AI models on the same task.
-
-**Task given to both models:**
-
-<!-- Describe what you asked each model to do -->
-
-| | Model A | Model B |
-|-|---------|---------|
-| **Model name** | | |
-| **Response summary** | | |
-| **More Pythonic?** | | |
-| **Clearer explanation?** | | |
-
-**Which did you prefer and why?**
-
-<!-- Your conclusion -->
