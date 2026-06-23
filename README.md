@@ -66,4 +66,4 @@ tests/test_game_logic.py ....                                            [100%]
 - General text elements were updated to use semantic HTML tags (`<h1>`, `<p>`, `<small>`) matching their role on the page.
 - Finally, the main title was centered to match the rest of the header area.
 
-![UI fixes screenshot](ui_fixes.png)
+![UI fixes screenshot](UI_fixes.png)
