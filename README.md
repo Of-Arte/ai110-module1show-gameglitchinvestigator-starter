@@ -48,15 +48,15 @@ Describe your fixed game in numbered steps so a reader can follow along without 
 ## 🧪 Test Results
 
 ```
-============================= test session starts ==============================
-platform darwin -- Python 3.14.3, pytest-9.0.3, pluggy-1.6.0
+=================================================================== test session starts ====================================================================
+platform darwin -- Python 3.14.3, pytest-9.1.1, pluggy-1.6.0
 rootdir: /Users/agentv/Projects/studysessions/AI110/gameglitch
-plugins: anyio-4.13.0
+plugins: anyio-4.14.0
 collected 4 items
 
-tests/test_game_logic.py ....                                            [100%]
+tests/test_game_logic.py ....                                                                                                                        [100%]
 
-============================== 4 passed in 0.01s ===============================
+==================================================================== 4 passed in 0.01s =====================================================================
 ```
 
 ## 🚀 Stretch Features
